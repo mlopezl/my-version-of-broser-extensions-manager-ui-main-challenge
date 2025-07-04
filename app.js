@@ -145,6 +145,24 @@ mainContent.addEventListener("change", (event) => {
     console.log(updatedData);
     localStorage.setItem("data", JSON.stringify(updatedData));
   }
+  const activeButton = Array.from(menuButtons.children).find(btn =>
+    btn.classList.contains("active")
+  );
+
+  const data = JSON.parse(localStorage.getItem("data") || "[]");
+  cardsContainer.innerHTML = "";
+
+  if (activeButton?.value === "active") {
+    data.forEach(el => {
+      if (el.isActive) createCard(el);
+    });
+  } else if (activeButton?.value === "inactive") {
+    data.forEach(el => {
+      if (!el.isActive) createCard(el);
+    });
+  } else {
+    data.forEach(createCard);
+  }
 });
 
 mainContent.addEventListener('click', (event) =>{
